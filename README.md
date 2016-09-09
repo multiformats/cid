@@ -37,7 +37,7 @@ Where
 
 - `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 or 2 bytes), to ease encoding CIDs into various bases.
 - `<cid-version>` is a [varint](https://github.com/multiformats/unsigned-varint) representing the version of CID, here for upgradability purposes.
-- `<multicodec-packed-content-type> is a [multicodec-packed](https://github.com/multiformats/multicodec/blob/master/multicodec-packed.md) code representing the content type or format of the data being addressed.
+- `<multicodec-packed-content-type>` is a [multicodec-packed](https://github.com/multiformats/multicodec/blob/master/multicodec-packed.md) code representing the content type or format of the data being addressed.
 - `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
 
 That's it!
