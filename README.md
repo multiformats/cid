@@ -1,19 +1,25 @@
-# CID - Content IDentifier
+# CID (Content IDentifier)
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
 [![](https://img.shields.io/badge/project-ipld-blue.svg?style=flat-square)](http://github.com/ipld/ipld)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
 
-> self-describing content-addressed identifiers for distributed systems
-
-
-<!--
+> Self-describing content-addressed identifiers for distributed systems
 
 ## Table of Contents
 
-TODO
-
--->
+- [Motivation](#motivation)
+- [How does it work? - Protocol Description](#how-does-it-work---protocol-description)
+- [Design Considerations](#design-considerations)
+- [Human Readable CIDs](#human-readable-cids)
+- [Versions](#versions)
+  - [CIDv0](#cidv0)
+  - [CIDv1](#cidv1)
+- [Implementations](#implementations)
+- [FAQ](#faq)
+- [Maintainers](#maintainers)
+- [Contribute](#contribute)
+- [License](#license)
 
 ## Motivation
 
@@ -127,10 +133,12 @@ Captain: [@jbenet](https://github.com/jbenet).
 
 ## Contribute
 
-Contributions welcome. Please check out [the issues](https://github.com/multiformats/multicodec/issues).
+Contributions welcome. Please check out [the issues](https://github.com/ipld/cid/issues).
 
-Check out our [contributing document](https://github.com/multiformats/multiformats/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
+Check out our [contributing document](https://github.com/ipld/ipld/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to IPLD are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
-[MIT](LICENSE)
+This repository is only for documents. These are licensed under a [CC-BY 3.0 Unported](LICENSE) License © 2016 Protocol Labs Inc.
