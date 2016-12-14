@@ -14,7 +14,7 @@ Hey everyone, the below is a proposal for some changes to IPFS, IPLD, and how we
 
 ## Multicodec Packed Representation
 
-It is useful to have a compact version of mulicodec, for use in small identifiers. This compact identifier will just be a single varint, looked up in a table. Different applications can use different tables. We should probably have one common table for well-known formats.
+It is useful to have a compact version of multicodec, for use in small identifiers. This compact identifier will just be a single varint, looked up in a table. Different applications can use different tables. We should probably have one common table for well-known formats.
 
 We will establish a table for common authenticated data structure formats, for example: IPFS v0 Merkledag, CBOR IPLD, Git, Bitcoin, and more. The table is a simple varint lookup.
 
