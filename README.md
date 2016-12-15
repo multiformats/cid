@@ -99,7 +99,7 @@ See the section: [How does it work? - Protocol Description](#how-does-it-work-pr
 
 ## Implementations
 
-- [go-cid](https://github.com/ipld/go-cid)
+- [go-cid](https://github.com/ipfs/go-cid)
 - [js-cid](https://github.com/ipld/js-cid)
 - [Add yours today!](https://github.com/multiformats/multicodec/edit/master/multicodec-packed.md)
 
