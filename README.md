@@ -107,7 +107,8 @@ See the section: [How does it work? - Protocol Description](#how-does-it-work-pr
 
 - [go-cid](https://github.com/ipfs/go-cid)
 - [js-cid](https://github.com/ipld/js-cid)
-- [Add yours today!](https://github.com/multiformats/multicodec/edit/master/multicodec-packed.md)
+- [rust-cid](https://github.com/ipld/rust-cid)
+- [Add yours today!](https://github.com/ipld/cid/edit/master/README.md)
 
 ## FAQ
 
