@@ -54,7 +54,7 @@ That's it!
 CIDs design takes into account many difficult tradeoffs encountered while building [IPFS](https://ipfs.io). These are mostly coming from the multiformats project.
 
 - Compactness: CIDs are binary in nature to ensure these are as compact as possible, as they're meant to be part of longer path identifiers or URLs.
-- Transport friendliness (or "copy-pastability"): CIDs are encoded with multibase to allow choosing the best base for transporting. For example, CIDs can be encoded into base58 to yield shorter and easily-copy-pastable hashes.
+- Transport friendliness (or "copy-pastability"): CIDs are encoded with multibase to allow choosing the best base for transporting. For example, CIDs can be encoded into base58btc to yield shorter and easily-copy-pastable hashes.
 - Versatility: CIDs are meant to be able to represent values of any format with any cryptographic hash.
 - Avoid Lock-in: CIDs prevent lock-in to old, potentially-outdated decisions.
 - Upgradability: CIDs encode a version to ensure the CID format itself can evolve.
@@ -68,7 +68,7 @@ It is advantageous to have a human readable description of a CID, solely for the
 ```
 Where each sub-component is represented with its own human-readable form:
 
-- `<hr-mbc>` is a human-readable multibase code (eg `base58`)
+- `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
 - `<hr-cid-version>` is the string `cidv#` (eg `cidv1` or `cidv2`)
 - `<hr-mcp>` is a human-readable multicodec-packed code (eg `cbor`)
 - `<hr-mh>` is a human-readanble multihash (eg `sha2-256-256-abcdef0123456789...`)
@@ -86,7 +86,7 @@ For example:
 ### CIDv0
 
 CIDv0 is a backwards-compatible version, where:
-- the `multibase` is always `base58` and implicit (not written)
+- the `multibase` is always `base58btc` and implicit (not written)
 - the `multicodec` is always `protobuf-mdag` and implicit (not written)
 - the `cid-version` is always `cidv0` and implicit (not written)
 - the `multihash` is written as is.
@@ -118,7 +118,7 @@ Please check their repositories: [multicodec](https://github.com/multiformats/mu
 
 > **Q. Why does CID exist?**
 
-We were using base58 encoded multihashes in IPFS, and then we needed to switch formats to IPLD. We struggled with lots of problems of addressing data with different formats until we created CIDs. You can read the history of this format here: https://github.com/ipfs/specs/issues/130
+We were using base58btc encoded multihashes in IPFS, and then we needed to switch formats to IPLD. We struggled with lots of problems of addressing data with different formats until we created CIDs. You can read the history of this format here: https://github.com/ipfs/specs/issues/130
 
 > **Q. Is the use of multicodec-packed similar to file extensions?**
 
