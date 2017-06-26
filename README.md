@@ -106,6 +106,7 @@ See the section: [How does it work? - Protocol Description](#how-does-it-work-pr
 ## Implementations
 
 - [go-cid](https://github.com/ipfs/go-cid)
+- [java-cid](https://github.com/ipld/java-cid)
 - [js-cid](https://github.com/ipld/js-cid)
 - [rust-cid](https://github.com/ipld/rust-cid)
 - [Add yours today!](https://github.com/ipld/cid/edit/master/README.md)
