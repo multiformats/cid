@@ -89,7 +89,7 @@ CIDv0 is a backwards-compatible version, where:
 - the `multibase` is always `base58btc` and implicit (not written)
 - the `multicodec` is always `protobuf-mdag` and implicit (not written)
 - the `cid-version` is always `cidv0` and implicit (not written)
-- the `multihash` is written as is.
+- the `multihash` is written as is but is always a full (length 32) sha256 hash.
 
 ```
 cidv0 ::= <multihash-content-address>
@@ -102,6 +102,29 @@ See the section: [How does it work? - Protocol Description](#how-does-it-work-pr
 ```
 <cidv1> ::= <multibase-prefix><cid-version><multicodec-packed-content-type><multihash-content-address>
 ```
+
+## Decoding Algorithm
+
+To decode a CID, follow the following algorithm:
+
+1. If it's a string (ASCII/UTF-8):
+  * If it is 46 characters long and starts with `Qm...`, it's a CIDv0. Decode it as base58btc and:
+    * The CID's multihash is the decoded CID.
+    * The CID's multicodec is DagProtobuf.
+    * The CID's version is 0.
+  * Otherwise, decode it according to the multibase spec.
+2. Given a (binary) CID (`cid`):
+   * If it's 34 bytes long with the leading bytes `[0x12, 0x20, ...]`, it's a CIDv0.
+     * The CID's multihash is `cid`.
+     * The CID's multicodec is DagProtobuf
+     * The CID's version is 0.
+   * Otherwise, let `N` be the first varint in `cid`. This is the CID's version.
+     * If `N == 1` (CIDv1):
+       * THe CID's multicodec is the second varint in `cid`
+       * The CID's multihash is the rest of the `cid` (after the second varint).
+       * The CID's version is 1.
+     * If `N <= 0`, the CID is malformed.
+     * If `N > 1`, the CID version is reserved.
 
 ## Implementations
 
