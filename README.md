@@ -109,6 +109,7 @@ See the section: [How does it work? - Protocol Description](#how-does-it-work-pr
 - [java-cid](https://github.com/ipld/java-cid)
 - [js-cid](https://github.com/ipld/js-cid)
 - [rust-cid](https://github.com/ipld/rust-cid)
+- [py-cid](https://github.com/ipld/py-cid)
 - [Add yours today!](https://github.com/ipld/cid/edit/master/README.md)
 
 ## FAQ
