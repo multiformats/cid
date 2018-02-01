@@ -29,22 +29,22 @@ You can read an in-depth discussion on why this format was needed in IPFS here: 
 
 ## How does it work? - Protocol Description
 
-CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec-packed](https://github.com/multiformats/multicodec/blob/master/multicodec-packed.md) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
+CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec](https://github.com/multiformats/multicodec) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
 
 Current version: CIDv1
 
 A CIDv1 has four parts:
 
 ```sh
-<cidv1> ::= <mb><version><mcp><mh>
+<cidv1> ::= <mb><version><mc><mh>
 # or, expanded:
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-packed-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
 ```
 Where
 
 - `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 or 2 bytes), to ease encoding CIDs into various bases.
 - `<cid-version>` is a [varint](https://github.com/multiformats/unsigned-varint) representing the version of CID, here for upgradability purposes.
-- `<multicodec-packed-content-type>` is a [multicodec-packed](https://github.com/multiformats/multicodec/blob/master/multicodec-packed.md) code representing the content type or format of the data being addressed.
+- `<multicodec-content-type>` is a [multicodec](https://github.com/multiformats/multicodec) code representing the content type or format of the data being addressed.
 - `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
 
 That's it!
@@ -64,13 +64,13 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 It is advantageous to have a human readable description of a CID, solely for the purposes of debugging and explanation. We can easily transform a CID to a "Human Readable CID" as follows:
 
 ```
-<hr-cid> ::= <hr-mbc> "-" <hr-cid-version> "-" <hr-mcp> "-" <hr-mh>
+<hr-cid> ::= <hr-mbc> "-" <hr-cid-version> "-" <hr-mc> "-" <hr-mh>
 ```
 Where each sub-component is represented with its own human-readable form:
 
 - `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
 - `<hr-cid-version>` is the string `cidv#` (eg `cidv1` or `cidv2`)
-- `<hr-mcp>` is a human-readable multicodec-packed code (eg `cbor`)
+- `<hr-mc>` is a human-readable multicodec code (eg `cbor`)
 - `<hr-mh>` is a human-readanble multihash (eg `sha2-256-256-abcdef0123456789...`)
 
 For example:
@@ -100,7 +100,7 @@ cidv0 ::= <multihash-content-address>
 See the section: [How does it work? - Protocol Description](#how-does-it-work-protocol-description)
 
 ```
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-packed-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
 ```
 
 ## Implementations
@@ -122,11 +122,11 @@ Please check their repositories: [multicodec](https://github.com/multiformats/mu
 
 We were using base58btc encoded multihashes in IPFS, and then we needed to switch formats to IPLD. We struggled with lots of problems of addressing data with different formats until we created CIDs. You can read the history of this format here: https://github.com/ipfs/specs/issues/130
 
-> **Q. Is the use of multicodec-packed similar to file extensions?**
+> **Q. Is the use of multicodec similar to file extensions?**
 
-Yes, kind of! like a file extension, the multicodec-packed identifier establishes the format of the data. Unlike file extensions, these are in the middle of the identifier and not meant to be changed by users. There is also a short table of supported formats.
+Yes, kind of! like a file extension, the multicodec identifier establishes the format of the data. Unlike file extensions, these are in the middle of the identifier and not meant to be changed by users. There is also a short table of supported formats.
 
-> **Q. What formats (multicodec-packed codes) does CID support?**
+> **Q. What formats (multicodec codes) does CID support?**
 
 We are figuring this out at this time. It will likely be a table of formats for secure distributed systems. So far, we want to address: IPFS's original protobuf format, the new IPLD CBOR format, git, bitcoin, and ethereum objects.
 
