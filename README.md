@@ -71,15 +71,18 @@ Where each sub-component is represented with its own human-readable form:
 - `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
 - `<hr-cid-version>` is the string `cidv#` (eg `cidv1` or `cidv2`)
 - `<hr-mc>` is a human-readable multicodec code (eg `cbor`)
-- `<hr-mh>` is a human-readanble multihash (eg `sha2-256-256-abcdef0123456789...`)
+- `<hr-mh>` is a human-readable multihash (eg `sha2-256-256-abcdef0123456789...`)
 
 For example:
 
 ```
-# TODO example
 # example CID
+zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
 # corresponding human readable CID
+base58btc - cidv1 - raw - sha2-256-256-6e6ff7950a36187a801613426e858dce686cd7d7e3c0fc42ee0330072d245c95
 ```
+
+See: http://cid-utils.ipfs.team/#zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
 
 ## Versions
 
@@ -97,7 +100,7 @@ cidv0 ::= <multihash-content-address>
 
 ### CIDv1
 
-See the section: [How does it work? - Protocol Description](#how-does-it-work-protocol-description)
+See the section: [How does it work? - Protocol Description](#how-does-it-work---protocol-description)
 
 ```
 <cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
