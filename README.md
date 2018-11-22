@@ -135,6 +135,7 @@ To decode a CID, follow the following algorithm:
 - [js-cid](https://github.com/ipld/js-cid)
 - [rust-cid](https://github.com/ipld/rust-cid)
 - [py-cid](https://github.com/ipld/py-cid)
+- [elixir-cid](https://github.com/nocursor/ex-cid)
 - [Add yours today!](https://github.com/ipld/cid/edit/master/README.md)
 
 ## FAQ
