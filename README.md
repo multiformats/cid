@@ -9,12 +9,14 @@
 ## Table of Contents
 
 - [Motivation](#motivation)
-- [How does it work? - Protocol Description](#how-does-it-work---protocol-description)
+- [What is it?](#what-is-it)
+- [How does it work?](#how-does-it-work)
 - [Design Considerations](#design-considerations)
 - [Human Readable CIDs](#human-readable-cids)
 - [Versions](#versions)
-  - [CIDv0](#cidv0)
-  - [CIDv1](#cidv1)
+    - [CIDv0](#cidv0)
+    - [CIDv1](#cidv1)
+- [Decoding Algorithm](#decoding-algorithm)
 - [Implementations](#implementations)
 - [FAQ](#faq)
 - [Maintainers](#maintainers)
@@ -27,9 +29,13 @@
 
 **You can read an in-depth discussion on why this format was needed in IPFS here: https://github.com/ipfs/specs/issues/130 (first post reproduced [here](./original-rfc.md))**
 
-## How does it work? - Protocol Description
+## What is it?
 
-CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec](https://github.com/multiformats/multicodec) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
+A CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec](https://github.com/multiformats/multicodec) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
+
+Concretely, it's *typed* content address: a tuple of `(content-type, content-address)`.
+
+## How does it work?
 
 Current version: CIDv1
 
