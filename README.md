@@ -139,11 +139,11 @@ To decode a CID, follow the following algorithm:
 
 - [go-cid](https://github.com/ipfs/go-cid)
 - [java-cid](https://github.com/ipld/java-cid)
-- [js-cid](https://github.com/ipld/js-cid)
-- [rust-cid](https://github.com/ipld/rust-cid)
+- [js-cid](https://github.com/multiformats/js-cid)
+- [rust-cid](https://github.com/multiformats/rust-cid)
 - [py-cid](https://github.com/ipld/py-cid)
 - [elixir-cid](https://github.com/nocursor/ex-cid)
-- [Add yours today!](https://github.com/ipld/cid/edit/master/README.md)
+- [Add yours today!](https://github.com/multiformats/cid/edit/master/README.md)
 
 ## FAQ
 
