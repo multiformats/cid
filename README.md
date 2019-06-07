@@ -33,7 +33,7 @@
 
 A CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec](https://github.com/multiformats/multicodec) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
 
-Concretely, it's *typed* content address: a tuple of `(content-type, content-address)`.
+Concretely, it's a *typed* content address: a tuple of `(content-type, content-address)`.
 
 ## How does it work?
 
