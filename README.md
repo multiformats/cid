@@ -107,7 +107,7 @@ cidv0 ::= <multihash-content-address>
 
 ### CIDv1
 
-See the section: [How does it work? - Protocol Description](#how-does-it-work---protocol-description)
+See the section: [How does it work?](#how-does-it-work)
 
 ```
 <cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
