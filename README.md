@@ -96,8 +96,8 @@ See: https://cid.ipfs.io/#zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
 ### CIDv0
 
 CIDv0 is a backwards-compatible version, where:
-- the `multibase` is always `base58btc` and implicit (not written)
-- the `multicodec` is always `protobuf-mdag` and implicit (not written)
+- the `multibase` of the string representation is always `base58btc` and implicit (not written)
+- the `multicodec` is always `dag-pb` and implicit (not written)
 - the `cid-version` is always `cidv0` and implicit (not written)
 - the `multihash` is written as is but is always a full (length 32) sha256 hash.
 
