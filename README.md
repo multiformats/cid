@@ -60,7 +60,7 @@ That's it!
 
 CIDs design takes into account many difficult tradeoffs encountered while building [IPFS](https://ipfs.io). These are mostly coming from the multiformats project.
 
-- Compactness: CIDs are binary in nature to ensure these are as compact as possible, as they're meant to be part of longer path identifiers or URLs.
+- Compactness: CIDs are binary in nature to ensure these are as compact as possible, as they're meant to be part of longer path identifiers or URIs.
 - Transport friendliness (or "copy-pastability"): CIDs are encoded with multibase to allow choosing the best base for transporting. For example, CIDs can be encoded into base58btc to yield shorter and easily-copy-pastable hashes.
 - Versatility: CIDs are meant to be able to represent values of any format with any cryptographic hash.
 - Avoid Lock-in: CIDs prevent lock-in to old, potentially-outdated decisions.
