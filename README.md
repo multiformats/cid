@@ -42,15 +42,15 @@ Current version: CIDv1
 A CIDv1 has four parts:
 
 ```sh
-<cidv1> ::= <mb><version><mc><mh>
+<cidv1> ::= <mb><multicodec-cidv1><mc><mh>
 # or, expanded:
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
 Where
 
 - `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 or 2 bytes), to ease encoding CIDs into various bases. **NOTE:** *Binary* (not text-based) protocols and formats may omit the multibase prefix when the encoding is unambiguous.
-- `<cid-version>` is a [varint](https://github.com/multiformats/unsigned-varint) representing the version of CID, here for upgradability purposes.
+- `<multicodec-cidv1>` is a [multicodec](https://github.com/multiformats/multicodec) representing the version of CID, here for upgradability purposes.
 - `<multicodec-content-type>` is a [multicodec](https://github.com/multiformats/multicodec) code representing the content type or format of the data being addressed.
 - `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
 
@@ -71,12 +71,12 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 It is advantageous to have a human readable description of a CID, solely for the purposes of debugging and explanation. We can easily transform a CID to a "Human Readable CID" as follows:
 
 ```
-<hr-cid> ::= <hr-mbc> "-" <hr-cid-version> "-" <hr-mc> "-" <hr-mh>
+<hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
 ```
 Where each sub-component is represented with its own human-readable form:
 
 - `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
-- `<hr-cid-version>` is the string `cidv#` (eg `cidv1` or `cidv2`)
+- `<hr-cid-mc>` is the string `cidv#` (eg `cidv1` or `cidv2`)
 - `<hr-mc>` is a human-readable multicodec code (eg `cbor`)
 - `<hr-mh>` is a human-readable multihash (eg `sha2-256-256-abcdef0123456789...`)
 
@@ -110,7 +110,7 @@ cidv0 ::= <multihash-content-address>
 See the section: [How does it work?](#how-does-it-work)
 
 ```
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
 ## Decoding Algorithm
