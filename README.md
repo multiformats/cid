@@ -25,7 +25,7 @@
 
 ## Motivation
 
-[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io).
+[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io). It uses a [multicodec](https://github.com/multiformats/multicodec) to indicate its version, making it fully self describing.
 
 **You can read an in-depth discussion on why this format was needed in IPFS here: https://github.com/ipfs/specs/issues/130 (first post reproduced [here](./original-rfc.md))**
 
@@ -128,12 +128,12 @@ To decode a CID, follow the following algorithm:
      * The CID's multicodec is DagProtobuf
      * The CID's version is 0.
    * Otherwise, let `N` be the first varint in `cid`. This is the CID's version.
-     * If `N == 1` (CIDv1):
+     * If `N == 0x01` (CIDv1):
        * The CID's multicodec is the second varint in `cid`
        * The CID's multihash is the rest of the `cid` (after the second varint).
        * The CID's version is 1.
-     * If `N <= 0`, the CID is malformed.
-     * If `N > 1`, the CID version is reserved.
+     * If `N == 0x02` (CIDv2), or `N == 0x03` (CIDv3), the CID version is reserved.
+     * If `N` is equal to some other multicodec, the CID is malformed.
 
 ## Implementations
 
