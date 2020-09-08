@@ -25,7 +25,7 @@
 
 ## Motivation
 
-[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io).
+[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io). It uses a [multicodec](https://github.com/multiformats/multicodec) to indicate its version, making it fully self describing.
 
 **You can read an in-depth discussion on why this format was needed in IPFS here: https://github.com/ipfs/specs/issues/130 (first post reproduced [here](./original-rfc.md))**
 
@@ -42,15 +42,15 @@ Current version: CIDv1
 A CIDv1 has four parts:
 
 ```sh
-<cidv1> ::= <mb><version><mc><mh>
+<cidv1> ::= <mb><multicodec-cidv1><mc><mh>
 # or, expanded:
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
 Where
 
 - `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 or 2 bytes), to ease encoding CIDs into various bases. **NOTE:** *Binary* (not text-based) protocols and formats may omit the multibase prefix when the encoding is unambiguous.
-- `<cid-version>` is a [varint](https://github.com/multiformats/unsigned-varint) representing the version of CID, here for upgradability purposes.
+- `<multicodec-cidv1>` is a [multicodec](https://github.com/multiformats/multicodec) representing the version of CID, here for upgradability purposes.
 - `<multicodec-content-type>` is a [multicodec](https://github.com/multiformats/multicodec) code representing the content type or format of the data being addressed.
 - `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
 
@@ -71,12 +71,12 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 It is advantageous to have a human readable description of a CID, solely for the purposes of debugging and explanation. We can easily transform a CID to a "Human Readable CID" as follows:
 
 ```
-<hr-cid> ::= <hr-mbc> "-" <hr-cid-version> "-" <hr-mc> "-" <hr-mh>
+<hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
 ```
 Where each sub-component is represented with its own human-readable form:
 
 - `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
-- `<hr-cid-version>` is the string `cidv#` (eg `cidv1` or `cidv2`)
+- `<hr-cid-mc>` is the string `cidv#` (eg `cidv1` or `cidv2`)
 - `<hr-mc>` is a human-readable multicodec code (eg `cbor`)
 - `<hr-mh>` is a human-readable multihash (eg `sha2-256-256-abcdef0123456789...`)
 
@@ -110,7 +110,7 @@ cidv0 ::= <multihash-content-address>
 See the section: [How does it work?](#how-does-it-work)
 
 ```
-<cidv1> ::= <multibase-prefix><cid-version><multicodec-content-type><multihash-content-address>
+<cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
 ## Decoding Algorithm
@@ -128,12 +128,12 @@ To decode a CID, follow the following algorithm:
      * The CID's multicodec is DagProtobuf
      * The CID's version is 0.
    * Otherwise, let `N` be the first varint in `cid`. This is the CID's version.
-     * If `N == 1` (CIDv1):
+     * If `N == 0x01` (CIDv1):
        * The CID's multicodec is the second varint in `cid`
        * The CID's multihash is the rest of the `cid` (after the second varint).
        * The CID's version is 1.
-     * If `N <= 0`, the CID is malformed.
-     * If `N > 1`, the CID version is reserved.
+     * If `N == 0x02` (CIDv2), or `N == 0x03` (CIDv3), the CID version is reserved.
+     * If `N` is equal to some other multicodec, the CID is malformed.
 
 ## Implementations
 
