@@ -113,6 +113,30 @@ See the section: [How does it work?](#how-does-it-work)
 <cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
+### CIDv2 ("Fat Pointers")
+
+CIDv2 offers a way to encode context markers (signalling) into the IPLD link layer.
+
+CIDv2 is used for describing both *data* and the *context* for that data. A specific definition of
+context is not needed, as any context one would wish to signal in the link layer is effectively
+supported.
+
+CIDv2 is, quite literally, two CIDs.
+
+```
+<cidv2> ::= <data-cid><context-cid>
+```
+
+CIDv2 *can* be used in a reverse compatible manor with CIDv1 as a codec, which allows for CIDv2
+links to be encoded as separate hash addressed blocks or inlined into data structures with
+and `identity` multihash as CIDv1. The requirements for different use cases will lead to different
+encodings, and as support CIDv2 becomes more widespread we should expect more "native" use of CIDv2.
+
+For instance, IPFS HTTP Gateways redirect to CID based subdomains which introduced a byte limit on the size
+of the link. In this case, IPFS HTTP Gateways would create a single block for the CIDv2 link
+with a 256b multihash encoded into CIDv1 for any redirect subdomain.
+
+
 ## Decoding Algorithm
 
 To decode a CID, follow the following algorithm:
