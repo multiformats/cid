@@ -161,7 +161,7 @@ Yes, kind of! like a file extension, the multicodec identifier establishes the f
 
 > **Q. What formats (multicodec codes) does CID support?**
 
-We are figuring this out at this time. It will likely be a table of formats for secure distributed systems. So far, we want to address: IPFS's original protobuf format, the new IPLD CBOR format, git, bitcoin, and ethereum objects.
+We are figuring this out at this time. It will likely be a subset of [multicodecs](https://github.com/multiformats/multicodec/blob/master/table.csv) for secure distributed systems. So far, we want to address IPFS's UnixFS and raw blocks ([`dag-pb`](https://ipld.io/specs/codecs/dag-pb/spec/), [`raw`](https://www.iana.org/assignments/media-types/application/vnd.ipld.raw)), IPNS's [`libp2p-key`](https://github.com/libp2p/specs/blob/master/RFC/0001-text-peerid-cid.md), and IPLD's [`dag-json`](https://ipld.io/specs/codecs/dag-json/spec/)/[`dag-cbor`](https://ipld.io/specs/codecs/dag-cbor/spec/) formats.
 
 ## Maintainers
 
