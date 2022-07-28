@@ -163,6 +163,14 @@ Yes, kind of! like a file extension, the multicodec identifier establishes the f
 
 We are figuring this out at this time. It will likely be a table of formats for secure distributed systems. So far, we want to address: IPFS's original protobuf format, the new IPLD CBOR format, git, bitcoin, and ethereum objects.
 
+> **Q. What is the process for updating CID specification (e.g., adding a new version)?**
+
+CIDs are a well established standard. IPFS uses CIDs for content-addressing and IPNS.
+Making changes to such key protocol requires a careful review which should include feedback from implementers and stakeholders across ecosystem.
+
+Due to this, changes to CID specification MUST be submitted as an improvement proposal to [ipfs/specs](https://github.com/ipfs/specs/tree/main/IPIP) repository (PR with [IPIP document](https://github.com/ipfs/specs/blob/main/IPIP/0000-template.md)), and follow the IPIP process described there. 
+
+
 ## Maintainers
 
 Captain: [@jbenet](https://github.com/jbenet).
