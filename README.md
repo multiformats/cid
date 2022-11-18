@@ -141,7 +141,7 @@ To decode a CID, follow the following algorithm:
 - [java-cid](https://github.com/ipld/java-cid)
 - [js-multiformats](https://github.com/multiformats/js-multiformats)
 - [rust-cid](https://github.com/multiformats/rust-cid)
-- [py-cid](https://github.com/ipld/py-cid)
+- [py-multiformats-cid](https://github.com/pinnaculum/py-multiformats-cid)
 - [elixir-cid](https://github.com/nocursor/ex-cid)
 - [Add yours today!](https://github.com/multiformats/cid/edit/master/README.md)
 
