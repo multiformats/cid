@@ -41,7 +41,7 @@ Current version: CIDv1
 
 A CIDv1 has four parts:
 
-```sh
+```text
 <cidv1> ::= <mb><multicodec-cidv1><mc><mh>
 # or, expanded:
 <cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
@@ -70,7 +70,7 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 
 It is advantageous to have a human readable description of a CID, solely for the purposes of debugging and explanation. We can easily transform a CID to a "Human Readable CID" as follows:
 
-```
+```text
 <hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
 ```
 Where each sub-component is represented with its own human-readable form:
@@ -82,7 +82,7 @@ Where each sub-component is represented with its own human-readable form:
 
 For example:
 
-```
+```text
 # example CID
 zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
 # corresponding human readable CID
@@ -101,7 +101,7 @@ CIDv0 is a backwards-compatible version, where:
 - the `cid-version` is always `cidv0` and implicit (not written)
 - the `multihash` is written as is but is always a full (length 32) sha256 hash.
 
-```
+```text
 cidv0 ::= <multihash-content-address>
 ```
 
@@ -109,7 +109,7 @@ cidv0 ::= <multihash-content-address>
 
 See the section: [How does it work?](#how-does-it-work)
 
-```
+```text
 <cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
 ```
 
