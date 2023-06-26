@@ -143,6 +143,7 @@ To decode a CID, follow the following algorithm:
 - [rust-cid](https://github.com/multiformats/rust-cid)
 - [py-multiformats-cid](https://github.com/pinnaculum/py-multiformats-cid)
 - [elixir-cid](https://github.com/nocursor/ex-cid)
+- [dart_cid](https://github.com/dwyl/dart_cid)
 - [Add yours today!](https://github.com/multiformats/cid/edit/master/README.md)
 
 ## FAQ
