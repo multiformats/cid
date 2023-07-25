@@ -80,7 +80,7 @@ Where such binary-only systems interface with mixed systems, such as exposing in
 
 ## Variant Representation - Human Readable CID
 
-It is often advantageous to have a human readable description of a CID, such as for  debugging purposes, unit tests, and documentation. We can easily transform a CID to a "Human Readable CID" by segmenting its constituent parts as follows:
+It is often advantageous to have a human readable description of a CID, such as for  debugging purposes, unit tests, and documentation. We can easily transform a CID to a "Human Readable CID" by translating and segmenting its constituent parts as follows:
 
 ```text
 <hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
