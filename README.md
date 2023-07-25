@@ -8,20 +8,23 @@
 
 ## Table of Contents
 
-- [Motivation](#motivation)
-- [What is it?](#what-is-it)
-- [How does it work?](#how-does-it-work)
-- [Design Considerations](#design-considerations)
-- [Human Readable CIDs](#human-readable-cids)
-- [Versions](#versions)
+- [CID (Content IDentifier) Specification](#cid-content-identifier-specification)
+  - [Table of Contents](#table-of-contents)
+  - [Motivation](#motivation)
+  - [What is it?](#what-is-it)
+  - [How does it work?](#how-does-it-work)
+  - [Design Considerations](#design-considerations)
+  - [Variant Representation - Internal CID](#variant-representation---internal-cid)
+  - [Variant Representation - Human Readable CID](#variant-representation---human-readable-cid)
+  - [Versions](#versions)
     - [CIDv0](#cidv0)
     - [CIDv1](#cidv1)
-- [Decoding Algorithm](#decoding-algorithm)
-- [Implementations](#implementations)
-- [FAQ](#faq)
-- [Maintainers](#maintainers)
-- [Contribute](#contribute)
-- [License](#license)
+  - [Decoding Algorithm](#decoding-algorithm)
+  - [Implementations](#implementations)
+  - [FAQ](#faq)
+  - [Maintainers](#maintainers)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Motivation
 
@@ -49,7 +52,7 @@ A CIDv1 has four parts:
 
 Where
 
-- `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 Unicode codepoint), to ease encoding CIDs into various bases. **NOTE:** *Binary* (not text-based) protocols and formats may omit the multibase prefix when the encoding is unambiguous.
+- `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 Unicode codepoint), to ease encoding CIDs into various bases. **NOTE:** *Binary-only* protocols and transport-limited contexts MAY omit the multibase prefix when the encoding is unambiguous. See the [internal CID section](#variant-representation---internal-cid) below for context.
 - `<multicodec-cidv1>` is a [multicodec](https://github.com/multiformats/multicodec) representing the version of CID, here for upgradability purposes.
 - `<multicodec-content-type>` is a [multicodec](https://github.com/multiformats/multicodec) code representing the content type or format of the data being addressed.
 - `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
@@ -66,19 +69,27 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 - Avoid Lock-in: CIDs prevent lock-in to old, potentially-outdated decisions.
 - Upgradability: CIDs encode a version to ensure the CID format itself can evolve.
 
-## Human Readable CIDs
+## Variant Representation - Internal CID
 
-It is advantageous to have a human readable description of a CID, solely for the purposes of debugging and explanation. We can easily transform a CID to a "Human Readable CID" as follows:
+The multibase prefix minimizes risk of data being base-encoded for transport or interoperability purposes and then being divorced from its context, rendering its base-encoding difficult to detect and reconstruct.
+Furthermore, many transports and export formats require binary to be encoded as text according to one or more base-encodings.
+For this reason, the multibase "prefix" should ONLY be omitted in binary-only contexts, where base-encoding won't be required and context drift is not a concern.
+In such binary-only contexts (like the binary CIDs used as links in a binary data structure like [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs can be stored and used as "internal CIDs" (internal to a binary system).
+Where such binary-only systems interface with mixed systems, such as exposing internal CIDs to HTTP-based gateways or sending them over text-based transports, an appropriate base-encoding should be chosen and the prefix attached to make them full CIDs, warmly dressed and ready for the outside world.
+
+## Variant Representation - Human Readable CID
+
+It is often advantageous to have a human readable description of a CID, such as for  debugging purposes, unit tests, and documentation. We can easily transform a CID to a "Human Readable CID" by segmenting its constituent parts as follows:
 
 ```text
 <hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
 ```
-Where each sub-component is represented with its own human-readable form:
+Where each sub-component is replaced with its own human-readable form from the relevant registry:
 
-- `<hr-mbc>` is a human-readable multibase code (eg `base58btc`)
-- `<hr-cid-mc>` is the string `cidv#` (eg `cidv1` or `cidv2`)
-- `<hr-mc>` is a human-readable multicodec code (eg `cbor`)
-- `<hr-mh>` is a human-readable multihash (eg `sha2-256-256-abcdef0123456789...`)
+- `<hr-mbc>` is the name of the multibase code (eg `z`--> `base58btc`)
+- `<hr-cid-mc>` is the name of the multicodec for the version of CID used (eg `0x01` --> `cidv1`)
+- `<hr-mc>` is the name of the multicodec code (eg `0x51` --> `cbor`)
+- `<hr-mh>` is the name of the multihash code (eg `sha2-256-256`) followed by a final dash and the hash itself `-abcdef0123456789...`)
 
 For example:
 
