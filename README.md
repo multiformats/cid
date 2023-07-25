@@ -74,7 +74,8 @@ CIDs design takes into account many difficult tradeoffs encountered while buildi
 The multibase prefix minimizes risk of data being base-encoded for transport or interoperability purposes and then being divorced from its context, rendering its base-encoding difficult to detect and reconstruct.
 Furthermore, many transports and export formats require binary to be encoded as text according to one or more base-encodings.
 For this reason, the multibase "prefix" should ONLY be omitted in binary-only contexts, where base-encoding won't be required and context drift is not a concern.
-In such binary-only contexts (like the binary CIDs used as links in a binary data structure like [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs can be stored and used as "internal CIDs" (internal to a binary system).
+
+In these binary-only contexts, such as the binary CIDs used as links in the binary data structure [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs can be stored and consumed as "internal CIDs," i.e. internal to a binary system.
 Where such binary-only systems interface with mixed systems, such as exposing internal CIDs to HTTP-based gateways or sending them over text-based transports, an appropriate base-encoding should be chosen and the prefix attached to make them full CIDs, warmly dressed and ready for the outside world.
 
 ## Variant Representation - Human Readable CID
