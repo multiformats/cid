@@ -77,8 +77,10 @@ Implementers should be careful to detect the presence of this extra byte and rem
 
 In some contexts, CIDs with this extra "NULL" prefix are referred to as "legacy CIDs" to preserve backwards compatibility with earlier data, generated in systems where the NUL prefix was mandatory in all binary handling.
 
+## Variant - CBOR Compatibility
+
 It is also be useful to note that the for compatibility with CBOR systems, CBOR tag `42` was registered to CIDs in the [CBOR IANA registry](https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml) binary CIDs.
-Both the legacy form with the NULL prefix and the more commonly-used CIDv1 binary form without it conform to the [tag 42 syntax](https://github.com/ipld/cid-cbor/) expected by CBOR consumers.
+To work with CBOR parsers after a [tag 42 header](https://github.com/ipld/cid-cbor/), ONLY the "legacy form" with NULL prefix can be used. See [the strictness section of the DAG-CBOR spec](https://ipld.io/specs/codecs/dag-cbor/spec/#strictness) for further guidance on CBOR compatibility.
 
 ## Variant - Human-Readable Form
 
