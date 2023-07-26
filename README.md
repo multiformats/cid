@@ -8,8 +8,6 @@
 
 ## Table of Contents
 
-- [CID (Content IDentifier) Specification](#cid-content-identifier-specification)
-  - [Table of Contents](#table-of-contents)
   - [Motivation](#motivation)
   - [What is it?](#what-is-it)
   - [How does it work?](#how-does-it-work)
