@@ -40,45 +40,50 @@ Concretely, it's a *typed* content address: a tuple of `(content-type, content-a
 
 Current version: CIDv1
 
-A CIDv1 has four parts:
+The atomic CIDv1 is a **binary** format composed from `unsigned_varint`s that encode values from the , each of which :
 
 ```text
-<cidv1> ::= <mb><multicodec-cidv1><mc><mh>
+<cidv1> ::= <CIDv1-multicodec><content-multicodec><multihash>
 # or, expanded:
-<cidv1> ::= <multibase-prefix><multicodec-cidv1><multicodec-content-type><multihash-content-address>
+<cidv1> ::= <`0x01`, the multicodec literal for `CIDv1`><multicodec bytecode signaling content type of the data being addressed><multihash of that data>
 ```
 
 Where
 
-- `<multibase-prefix>` is a [multibase](https://github.com/multiformats/multibase) code (1 Unicode codepoint), to ease encoding CIDs into various bases. **NOTE:** *Binary-only* protocols and transport-limited contexts MAY omit the multibase prefix when the encoding is unambiguous. See the [internal CID section](#variant-representation---internal-cid) below for context.
 - `<multicodec-cidv1>` is a [multicodec](https://github.com/multiformats/multicodec) representing the version of CID, here for upgradability purposes.
 - `<multicodec-content-type>` is a [multicodec](https://github.com/multiformats/multicodec) code representing the content type or format of the data being addressed.
-- `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, representing the cryptographic hash of the content being addressed. Multihash enables CIDs to use many different cryptographic hash function, for upgradability and protocol agility purposes.
+- `<multihash-content-address>` is a [multihash](https://github.com/multiformats/multihash) value, which uses a registry of hash function abbreviations to prefix a cryptographic hash of the content being addressed, thus making it self-describing.
 
-That's it!
+## Variant - Stringified Form
 
-## Design Considerations
+Since CIDs have many applications outside of binary-only contexts, a given CID may need to be base-encoded multiple ways for different consumers or for different transports. 
+In such applications, CIDs are often expressed as a Unicode *string* rather than a bytestring, which adds a single code-point prefix. 
+In these contexts, then, the full string form is:
 
-CIDs design takes into account many difficult tradeoffs encountered while building [IPFS](https://ipfs.io). These are mostly coming from the multiformats project.
+```text
+<cidv1> ::= <multibase-codec><multibase-encoding(<CIDv1-multicodec><content-multicodec><multihash>)>
+```
 
-- Compactness: CIDs are binary in nature to ensure these are as compact as possible, as they're meant to be part of longer path identifiers or URIs.
-- Transport friendliness (or "copy-pastability"): CIDs are encoded with multibase to allow choosing the best base for transporting. For example, CIDs can be encoded into base58btc to yield shorter and easily-copy-pastable hashes.
-- Versatility: CIDs are meant to be able to represent values of any format with any cryptographic hash.
-- Avoid Lock-in: CIDs prevent lock-in to old, potentially-outdated decisions.
-- Upgradability: CIDs encode a version to ensure the CID format itself can evolve.
+Where
 
-## Variant Representation - Internal CID
+- `<multibase-codec>` is a [multibase](https://github.com/multiformats/multibase) prefix  (1 Unicode codepoint in length) that renders the base-encoded unicode string following it self-describing for simpler conversion back to binary.
+ 
+[internal CID section](#variant-representation---internal-cid) below for context.
 
-The multibase prefix minimizes risk of data being base-encoded for transport or interoperability purposes and then being divorced from its context, rendering its base-encoding difficult to detect and reconstruct.
-Furthermore, many transports and export formats require binary to be encoded as text according to one or more base-encodings.
-For this reason, the multibase "prefix" should ONLY be omitted in binary-only contexts, where base-encoding won't be required and context drift is not a concern.
+## Variant - Legacy Form
 
-In these binary-only contexts, such as the binary CIDs used as links in the binary data structure [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs can be stored and consumed as "internal CIDs," i.e. internal to a binary system.
-Where such binary-only systems interface with mixed systems, such as exposing internal CIDs to HTTP-based gateways or sending them over text-based transports, an appropriate base-encoding should be chosen and the prefix attached to make them full CIDs, warmly dressed and ready for the outside world.
+In some binary-only contexts, such as the binary CIDs used as links in the binary data structure [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs are encoded in binary, but with the one-byte "NULL" prefix (0x00) used like an "escape" character to signal to multibase consumers that what follows is NOT to be base-encoded.
+Implementers should be careful to detect the presence of this extra byte and remove it before base-encoding to produce a stringified form.
 
-## Variant Representation - Human Readable CID
+In some contexts, CIDs with this extra "NULL" prefix are referred to as "legacy CIDs" to preserve backwards compatibility with earlier data, generated in systems where the NUL prefix was mandatory in all binary handling.
 
-It is often advantageous to have a human readable description of a CID, such as for  debugging purposes, unit tests, and documentation. We can easily transform a CID to a "Human Readable CID" by translating and segmenting its constituent parts as follows:
+It is also be useful to note that the for compatibility with CBOR systems, CBOR tag `42` was registered to CIDs in the [CBOR IANA registry](https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml) binary CIDs.
+Both the legacy form with the NULL prefix and the more commonly-used CIDv1 binary form without it conform to the [tag 42 syntax](https://github.com/ipld/cid-cbor/) expected by CBOR consumers.
+
+## Variant - Human-Readable Form
+
+It is often advantageous to translate a CID, which is already modular and self-describing, into a *human-readable* expansion of its self-describing parts, for purposes such as debugging, unit testing, and documentation. 
+We can easily transform a Stringified CID to a "Human Readable CID" by translating and segmenting its constituent parts as follows:
 
 ```text
 <hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
@@ -98,8 +103,17 @@ zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
 # corresponding human readable CID
 base58btc - cidv1 - raw - sha2-256-256-6e6ff7950a36187a801613426e858dce686cd7d7e3c0fc42ee0330072d245c95
 ```
-
 See: https://cid.ipfs.io/#zb2rhe5P4gXftAwvA4eXQ5HJwsER2owDyS9sKaQRRVQPn93bA
+
+## Design Considerations
+
+CIDs design takes into account many difficult tradeoffs encountered while building [IPFS](https://ipfs.io). These are mostly coming from the multiformats project.
+
+- Compactness: CIDs are binary in nature to ensure these are as compact as possible, as they're meant to be part of longer path identifiers or URIs.
+- Transport friendliness (or "copy-pastability"): CIDs are encoded with multibase to allow choosing the best base for transporting. For example, CIDs can be encoded into base58btc to yield shorter and easily-copy-pastable hashes.
+- Versatility: CIDs are meant to be able to represent values of any format with any cryptographic hash.
+- Avoid Lock-in: CIDs prevent lock-in to old, potentially-outdated decisions.
+- Upgradability: CIDs encode a version to ensure the CID format itself can evolve.
 
 ## Versions
 
