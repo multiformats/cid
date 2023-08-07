@@ -40,7 +40,7 @@ Concretely, it's a *typed* content address: a tuple of `(content-type, content-a
 
 Current version: CIDv1
 
-The atomic CIDv1 is a **binary** format composed from `unsigned_varint`s that encode values from the , each of which :
+CIDv1 is a **binary** format composed of [unsigned varints](https://github.com/multiformats/unsigned-varint) prefixing a hash digest to form a self-describing "content address":
 
 ```text
 <cidv1> ::= <CIDv1-multicodec><content-multicodec><multihash>
