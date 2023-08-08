@@ -26,13 +26,17 @@
 
 ## Motivation
 
-[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io). It uses a [multicodec](https://github.com/multiformats/multicodec) to indicate its version, making it fully self describing.
+[**CID**](https://github.com/ipld/cid) is a format for referencing content in distributed information systems, like [IPFS](https://ipfs.io). 
+It leverages [content addressing](https://en.wikipedia.org/wiki/Content-addressable_storage), [cryptographic hashing](https://simple.wikipedia.org/wiki/Cryptographic_hash_function), and [self-describing formats](https://github.com/multiformats/multiformats). 
+It is the core identifier used by [IPFS](https://ipfs.io) and [IPLD](https://ipld.io). 
+It uses a [multicodec](https://github.com/multiformats/multicodec) to indicate its version, making it fully self describing.
 
 **You can read an in-depth discussion on why this format was needed in IPFS here: https://github.com/ipfs/specs/issues/130 (first post reproduced [here](./original-rfc.md))**
 
 ## What is it?
 
-A CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely:
+A CID is a self-describing content-addressed identifier. 
+It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely:
 1. [multihash](https://github.com/multiformats/multihash) to hash content addressed, and
 2. [multicodec](https://github.com/multiformats/multicodec) to type that addressed content,
 to form a binary self-contained identifier, and optionally also
