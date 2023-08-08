@@ -32,7 +32,11 @@
 
 ## What is it?
 
-A CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely [multihash](https://github.com/multiformats/multihash) for hashes, [multicodec](https://github.com/multiformats/multicodec) for data content types, and [multibase](https://github.com/multiformats/multibase) to encode the CID itself into strings.
+A CID is a self-describing content-addressed identifier. It uses cryptographic hashes to achieve content addressing. It uses several [multiformats](https://github.com/multiformats/multiformats) to achieve flexible self-description, namely:
+1. [multihash](https://github.com/multiformats/multihash) to hash content addressed, and
+2. [multicodec](https://github.com/multiformats/multicodec) to type that addressed content,
+to form a binary self-contained identifier, and optionally also
+3. [multibase](https://github.com/multiformats/multibase) to encode that binary CID as a  string.
 
 Concretely, it's a *typed* content address: a tuple of `(content-type, content-address)`.
 
@@ -43,9 +47,9 @@ Current version: CIDv1
 CIDv1 is a **binary** format composed of [unsigned varints](https://github.com/multiformats/unsigned-varint) prefixing a hash digest to form a self-describing "content address":
 
 ```text
-<cidv1> ::= <CIDv1-multicodec><content-multicodec><multihash>
+<cidv1> ::= <CIDv1-multicodec><content-type-multicodec><content-multihash>
 # or, expanded:
-<cidv1> ::= <`0x01`, the multicodec literal for `CIDv1`><multicodec bytecode signaling content type of the data being addressed><multihash of that data>
+<cidv1> ::= <`0x01`, the code for `CIDv1`><another code from `ipld` entries in multicodec table that signals content type of data being addressed><multihash of addressed data>
 ```
 
 Where
@@ -61,31 +65,17 @@ In such applications, CIDs are often expressed as a Unicode *string* rather than
 In these contexts, then, the full string form is:
 
 ```text
-<cidv1> ::= <multibase-codec><multibase-encoding(<CIDv1-multicodec><content-multicodec><multihash>)>
+<cidv1> ::= <multibase-codec><multibase-encoding(<CIDv1-multicodec><multicodec><multihash>)>
 ```
 
 Where
 
-- `<multibase-codec>` is a [multibase](https://github.com/multiformats/multibase) prefix  (1 Unicode codepoint in length) that renders the base-encoded unicode string following it self-describing for simpler conversion back to binary.
- 
-[internal CID section](#variant-representation---internal-cid) below for context.
-
-## Variant - Legacy Form
-
-In some binary-only contexts, such as the binary CIDs used as links in the binary data structure [DAG-CBOR](https://ipld.io/specs/codecs/dag-cbor/spec/#links)), CIDs are encoded in binary, but with the one-byte "NULL" prefix (0x00) used like an "escape" character to signal to multibase consumers that what follows is NOT to be base-encoded.
-Implementers should be careful to detect the presence of this extra byte and remove it before base-encoding to produce a stringified form.
-
-In some contexts, CIDs with this extra "NULL" prefix are referred to as "legacy CIDs" to preserve backwards compatibility with earlier data, generated in systems where the NUL prefix was mandatory in all binary handling.
-
-## Variant - CBOR Compatibility
-
-It is also be useful to note that the for compatibility with CBOR systems, CBOR tag `42` was registered to CIDs in the [CBOR IANA registry](https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml) binary CIDs.
-To work with CBOR parsers after a [tag 42 header](https://github.com/ipld/cid-cbor/), ONLY the "legacy form" with NULL prefix can be used. See [the strictness section of the DAG-CBOR spec](https://ipld.io/specs/codecs/dag-cbor/spec/#strictness) for further guidance on CBOR compatibility.
+- `<multibase-codec>` is a [multibase](https://github.com/multiformats/multibase) prefix  (1 Unicode code point in length) that renders the base-encoded unicode string following it self-describing for simpler conversion back to binary.
 
 ## Variant - Human-Readable Form
 
 It is often advantageous to translate a CID, which is already modular and self-describing, into a *human-readable* expansion of its self-describing parts, for purposes such as debugging, unit testing, and documentation. 
-We can easily transform a Stringified CID to a "Human Readable CID" by translating and segmenting its constituent parts as follows:
+We can easily transform a Stringified CID to a "Human-Readable CID" by translating and segmenting its constituent parts as follows:
 
 ```text
 <hr-cid> ::= <hr-mbc> "-" <hr-cid-mc> "-" <hr-mc> "-" <hr-mh>
