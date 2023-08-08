@@ -170,23 +170,29 @@ Please check their repositories: [multicodec](https://github.com/multiformats/mu
 
 > **Q. Why does CID exist?**
 
-We were using base58btc encoded multihashes in IPFS, and then we needed to switch formats to IPLD. We struggled with lots of problems of addressing data with different formats until we created CIDs. You can read the history of this format here: https://github.com/ipfs/specs/issues/130
+We were using base58btc encoded multihashes in IPFS, and then we needed to switch formats to IPLD. 
+We struggled with lots of problems of addressing data with different formats until we created CIDs. 
+You can read the history of this format here: https://github.com/ipfs/specs/issues/130
 
 > **Q. Is the use of multicodec similar to file extensions?**
 
-Yes, kind of! like a file extension, the multicodec identifier establishes the format of the data. Unlike file extensions, these are in the middle of the identifier and not meant to be changed by users. There is also a short table of supported formats.
+Yes, kind of! like a file extension, the multicodec identifier establishes the format of the data. 
+Unlike file extensions, these are in the middle of the identifier and not meant to be changed by users.
+There is also a short table of supported formats.
 
 > **Q. What formats (multicodec codes) does CID support?**
 
-We are figuring this out at this time. It will likely be a subset of [multicodecs](https://github.com/multiformats/multicodec/blob/master/table.csv) for secure distributed systems. So far, we want to address IPFS's UnixFS and raw blocks ([`dag-pb`](https://ipld.io/specs/codecs/dag-pb/spec/), [`raw`](https://www.iana.org/assignments/media-types/application/vnd.ipld.raw)), IPNS's [`libp2p-key`](https://github.com/libp2p/specs/blob/master/RFC/0001-text-peerid-cid.md), and IPLD's [`dag-json`](https://ipld.io/specs/codecs/dag-json/spec/)/[`dag-cbor`](https://ipld.io/specs/codecs/dag-cbor/spec/) formats.
+We are figuring this out at this time. 
+It will likely be a subset of [multicodecs](https://github.com/multiformats/multicodec/blob/master/table.csv) for secure distributed systems. 
+So far, we want to address IPFS's UnixFS and raw blocks ([`dag-pb`](https://ipld.io/specs/codecs/dag-pb/spec/), [`raw`](https://www.iana.org/assignments/media-types/application/vnd.ipld.raw)), IPNS's [`libp2p-key`](https://github.com/libp2p/specs/blob/master/RFC/0001-text-peerid-cid.md), and IPLD's [`dag-json`](https://ipld.io/specs/codecs/dag-json/spec/)/[`dag-cbor`](https://ipld.io/specs/codecs/dag-cbor/spec/) formats.
 
 > **Q. What is the process for updating CID specification (e.g., adding a new version)?**
 
-CIDs are a well established standard. IPFS uses CIDs for content-addressing and IPNS.
+CIDs are a well established standard. 
+IPFS uses CIDs for content-addressing and IPNS.
 Making changes to such key protocol requires a careful review which should include feedback from implementers and stakeholders across ecosystem.
 
 Due to this, changes to CID specification MUST be submitted as an improvement proposal to [ipfs/specs](https://github.com/ipfs/specs/tree/main/IPIP) repository (PR with [IPIP document](https://github.com/ipfs/specs/blob/main/IPIP/0000-template.md)), and follow the IPIP process described there. 
-
 
 ## Maintainers
 
@@ -196,10 +202,12 @@ Captain: [@jbenet](https://github.com/jbenet).
 
 Contributions welcome. Please check out [the issues](https://github.com/ipld/cid/issues).
 
-Check out our [contributing document](https://github.com/ipld/ipld/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to IPLD are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
+Check out our [contributing document](https://github.com/ipld/ipld/blob/master/contributing.md) for more information on how we work, and about contributing in general.
+Please be aware that all interactions related to IPLD are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
-This repository is only for documents. These are licensed under a [CC-BY 3.0 Unported](LICENSE) License © 2016 Protocol Labs Inc.
+This repository is only for documents.
+These are licensed under a [CC-BY 3.0 Unported](LICENSE) License © 2016 Protocol Labs Inc.
