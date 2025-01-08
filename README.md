@@ -164,6 +164,7 @@ To decode a CID, follow the following algorithm:
 - [py-multiformats-cid](https://github.com/pinnaculum/py-multiformats-cid)
 - [elixir-cid](https://github.com/nocursor/ex-cid)
 - [dart_cid](https://github.com/dwyl/dart_cid)
+- [zig_cid](https://github.com/zen-eth/multiformats-zig)
 - [Add yours today!](https://github.com/multiformats/cid/edit/master/README.md)
 
 ## FAQ
