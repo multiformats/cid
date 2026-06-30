@@ -1,5 +1,9 @@
 # CID (Content IDentifier) Specification
 
+> [!IMPORTANT]
+> This repository is outdated and kept for historical reference.
+> The maintained CID specification used by IPFS now lives at https://specs.ipfs.tech/cid/
+
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](https://protocol.ai/)
 [![](https://img.shields.io/badge/project-ipld-blue.svg?style=flat-square)](https://github.com/ipld/ipld)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](https://webchat.freenode.net/?channels=%23ipfs)
